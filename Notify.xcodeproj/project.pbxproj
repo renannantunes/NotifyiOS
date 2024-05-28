@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F78D6752C064A610088E20F /* VibrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F78D6742C064A610088E20F /* VibrationService.swift */; };
 		6FD10A892BF68DA900F89CEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD10A882BF68DA900F89CEE /* AppDelegate.swift */; };
 		6FD10A8B2BF68DA900F89CEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD10A8A2BF68DA900F89CEE /* SceneDelegate.swift */; };
 		6FD10A8D2BF68DA900F89CEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD10A8C2BF68DA900F89CEE /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F78D6742C064A610088E20F /* VibrationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VibrationService.swift; sourceTree = "<group>"; };
 		6FD10A852BF68DA900F89CEE /* Notify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FD10A882BF68DA900F89CEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6FD10A8A2BF68DA900F89CEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,10 +30,9 @@
 		6FD10A942BF68DA900F89CEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6FD10A962BF68DA900F89CEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FD10AA12BF68FFA00F89CEE /* Notify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notify.entitlements; sourceTree = "<group>"; };
-		6FD10AA22BF7DDFF00F89CEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6FD10AA22BF7DDFF00F89CEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6FD10AA72BFBF0A700F89CEE /* AutorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutorizationView.swift; sourceTree = "<group>"; };
 		6FD10AA92BFCF56F00F89CEE /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
-		6FD10AAB2BFCF57E00F89CEE /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
 		6FD10AB22BFD25B400F89CEE /* out2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = out2.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +74,7 @@
 				6FD10A8A2BF68DA900F89CEE /* SceneDelegate.swift */,
 				6FD10A8C2BF68DA900F89CEE /* ViewController.swift */,
 				6FD10AA72BFBF0A700F89CEE /* AutorizationView.swift */,
+				6F78D6742C064A610088E20F /* VibrationService.swift */,
 				6FD10A912BF68DA900F89CEE /* Assets.xcassets */,
 				6FD10AB22BFD25B400F89CEE /* out2.caf */,
 				6FD10A932BF68DA900F89CEE /* LaunchScreen.storyboard */,
@@ -85,7 +87,6 @@
 		6FD10AA42BF7E16500F89CEE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6FD10AAB2BFCF57E00F89CEE /* CallKit.framework */,
 				6FD10AA92BFCF56F00F89CEE /* PushKit.framework */,
 			);
 			name = Frameworks;
@@ -172,6 +173,7 @@
 			files = (
 				6FD10A8D2BF68DA900F89CEE /* ViewController.swift in Sources */,
 				6FD10AA82BFBF0A700F89CEE /* AutorizationView.swift in Sources */,
+				6F78D6752C064A610088E20F /* VibrationService.swift in Sources */,
 				6FD10A892BF68DA900F89CEE /* AppDelegate.swift in Sources */,
 				6FD10A8B2BF68DA900F89CEE /* SceneDelegate.swift in Sources */,
 			);

@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     var window: UIWindow?
     var notificationRequest: UNNotificationRequest?
+    var vibrationService = VibrationService.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -126,6 +127,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
        
 
     func sendLocalNotification() {
+        vibrationService.stopContinuousVibration()
+        vibrationService.startContinuousVibration()
+
         let content = UNMutableNotificationContent()
         content.title = "Renann Antunes está querendo entrar"
         content.body = "Interaja com a notificação para Aceitar ou Recusar."
@@ -143,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
+                self.vibrationService.stopContinuousVibration()
                 print("Erro ao adicionar notificação: \(error)")
             }
         }
