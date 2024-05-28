@@ -15,7 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     var window: UIWindow?
     var notificationRequest: UNNotificationRequest?
-
+    let notificationIdentifierPrefix = "uniqueNotificationIdentifier"
+    var notificationCount = 0
+    let maxNotifications = 10
+    let notificationInterval: TimeInterval = 3
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -68,13 +72,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
@@ -89,26 +93,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             
             print("Token: \(token)")
         }
-    }    
-  
+    }
+    
     // Implementar UNUserNotificationCenterDelegate para receber notificações
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner, .sound])
     }
-   
+    
     // Receber notificações
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // Este método é chamado quando uma notificação é recebida
         print("Notificação recebida: \(userInfo)")
         
         // Processar os dados da notificação
-        sendLocalNotification()
+        //        sendLocalNotification()
+        // Chame essa função para iniciar a sequência de notificações repetitivas
+        scheduleRepeatingNotifications()
         
         completionHandler(.newData)
     }
     
     // Processa resposta à notificação
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        // Parar o loop de notificações
+        stopRepeatingNotifications()
         
         // Mandar pra página de autorização se o app estiver aberto
         let authView = AutorizationView()
@@ -123,13 +132,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         completionHandler()
     }
-       
-
-    func sendLocalNotification() {
+    
+    
+    func sendLocalNotification(withIdentifier identifier: String, after interval: TimeInterval, index i: Int) {
+        
         let content = UNMutableNotificationContent()
         content.title = "Renann Antunes está querendo entrar"
         content.body = "Interaja com a notificação para Aceitar ou Recusar."
-        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "out2.caf"))
+        //        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "out2.caf"))
+        content.sound = .default
         content.categoryIdentifier = "VISITOR_REQUEST"
         
         // Add vibration pattern to notification
@@ -138,8 +149,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // Adicionando botões de texto diretamente no corpo da notificação
         content.userInfo = ["ACCEPT_ACTION": "ACCEPT_ACTION", "REJECT_ACTION": "REJECT_ACTION"]
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        // Remove a notificação anterior com o mesmo identificador, se existir
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
@@ -147,6 +162,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             }
         }
     }
-
+    
+    
+    
+    
+    func scheduleRepeatingNotifications() {
+        stopRepeatingNotifications()
+        for i in 1...maxNotifications {
+            let identifier = "\(notificationIdentifierPrefix)_\(i)"
+            sendLocalNotification(withIdentifier: identifier, after: TimeInterval(i) * notificationInterval, index: i)
+        }
+    }
+    
+    func stopRepeatingNotifications() {
+        for i in 1...maxNotifications {
+            let identifier = "\(notificationIdentifierPrefix)_\(i)"
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [identifier])
+        }
+    }
+    
+    
+    
 }
 
